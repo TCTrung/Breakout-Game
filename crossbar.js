@@ -7,13 +7,19 @@ class Crossbar {
     height;
     color;
     ctx;
+    speed;
+    isleft;
+    isRight;
 
-    constructor(x, y, width, height,color) {
+    constructor(x, y, width, height,color,speed) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.color = color;
+        this.speed = speed;
+        this.isleft = false;
+        this.isRight = false;
         this.canvas = document.getElementById("canvas");
         this.ctx = this.canvas.getContext('2d');
     }
@@ -26,23 +32,36 @@ class Crossbar {
         this.ctx.closePath();
     }
 
-    move() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
 
     moveLeft(){
-        this.x -= 30;
+        this.x -= this.speed;
     }
 
     moveRight(){
-        this.x += 30;
+        this.x += this.speed;
     }
 
     collideBall(ball) {
-        if (ball.y + ball.radius > this.y
+        if (ball.y + ball.radius >= this.y
             && this.x <= ball.x && this.x + this.width > ball.x) {
             ball.xSpeed = +ball.xSpeed;
             ball.ySpeed = -ball.ySpeed;
+        }
+    }
+
+    collideBall1(ball) {
+        if ( ball.y + ball.radius <= this.height
+            && this.x <= ball.x && this.x + this.width > ball.x) {
+            ball.xSpeed = +ball.xSpeed;
+            ball.ySpeed = -ball.ySpeed;
+        }
+    }
+
+    fixedPosition () {
+        if (this.x < 0) {
+            this.x = 0;
+        } else if(this.x + this.width > this.canvas.width) {
+            this.x = this.canvas.width - this.width;
         }
     }
 
