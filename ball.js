@@ -31,13 +31,13 @@ class Ball {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
-    //Điều kiện bóng chạm vào tường để bật lại
+
     collisionWall() {
         if(this.x <= this.radius || this.x > this.canvas.width - this.radius) {
             this.xSpeed = -this.xSpeed;
         }
         if (this.y <= this.radius)
-        {            // || this.y >= this.canvas.height - this.radius) {
+        {
             this.ySpeed = -this.ySpeed;
         }
     }
@@ -48,17 +48,27 @@ class Ball {
     }
 
     collisionBrick(bricks) {
-        for (let i = 0; i < bricks.length; i++) {
-            for (let j = 0; j < bricks[i].length; j++) {
-                if(this.x + this.radius <= bricks[i][j].width + bricks[i][j].x
-                    && this.x >= bricks[i][j].x && this.y - this.radius <= bricks[i][j].y
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 12; j++) {
+                if (bricks[i][j].isBroken === false) {
 
-                ) {
-                    bricks[i][j].isBroken = true;
-                    point++;
-
+                        if (this.y > bricks[i][j].y && this.y < bricks[i][j].y + 40
+                            && this.x > bricks[i][j].x && this.x < bricks[i][j].x + 40
+                        ) {
+                            this.ySpeed = -this.ySpeed;
+                            bricks[i][j].isBroken = true;
+                            scores.point += 1;
+                            console.log(1)
+                        // } else if (scores.point === 23) {
+                        //     alert('You Win !');
+                        //     document.location.reload();
+                        }
+                    }
                 }
-            }
+        }
+        if (scores.point === 23) {
+            alert('You Win !');
+            document.location.reload();
         }
     }
 

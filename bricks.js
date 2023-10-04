@@ -5,9 +5,9 @@ class Brick {
     height;
     color;
     ctx;
-    margin; // Lề giữa 2 viên gạch phía ngoài
-    distance; //Khoảng cách giữa các viên gạch
-    isBroken; // Xem gạch đã vỡ hay chưa
+    margin;
+    distance;
+    isBroken;
 
     constructor(
         width,
