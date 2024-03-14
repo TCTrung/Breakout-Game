@@ -7,7 +7,7 @@ class Ball {
     xSpeed;
     ySpeed;
 
-    constructor(x, y, radius, color,xSpeed,ySpeed) {
+    constructor(x, y, radius, color, xSpeed, ySpeed) {
         this.x = x;
         this.y = y;
         this.xSpeed = xSpeed;
@@ -33,11 +33,10 @@ class Ball {
 
 
     collisionWall() {
-        if(this.x <= this.radius || this.x > this.canvas.width - this.radius) {
+        if (this.x <= this.radius || this.x > this.canvas.width - this.radius) {
             this.xSpeed = -this.xSpeed;
         }
-        if (this.y <= this.radius)
-        {
+        if (this.y <= this.radius) {
             this.ySpeed = -this.ySpeed;
         }
     }
@@ -48,30 +47,23 @@ class Ball {
     }
 
     collisionBrick(bricks) {
-        for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 12; j++) {
-                if (bricks[i][j].isBroken === false) {
-
-                        if (this.y > bricks[i][j].y && this.y < bricks[i][j].y + 40
-                            && this.x > bricks[i][j].x && this.x < bricks[i][j].x + 40
-                        ) {
-                            this.ySpeed = -this.ySpeed;
-                            bricks[i][j].isBroken = true;
-                            scores.point += 1;
-                            console.log(1)
-                        // } else if (scores.point === 23) {
-                        //     alert('You Win !');
-                        //     document.location.reload();
-                        }
+        for (let i = 0; i < bricks.length; i++) {
+            for (let j = 0; j < bricks[i].length; j++) {
+                let brick = bricks[i][j];
+                if (!brick.isBroken) {
+                    if (this.x + this.radius >= brick.x && this.x - this.radius <= brick.x + brick.width &&
+                        this.y + this.radius >= brick.y && this.y - this.radius <= brick.y + brick.height) {
+                        this.ySpeed = -this.ySpeed;
+                        brick.isBroken = true;
+                        scores.point += 1;
                     }
                 }
+            }
         }
-        if (scores.point === 23) {
-            alert('You Win !');
+        // Kiểm tra điều kiện thắng/thua ở đây (ví dụ: điểm số đạt mức nào đó)
+        if (scores.point === 24) {
+            alert('You Win!');
             document.location.reload();
         }
     }
-
-
-
 }

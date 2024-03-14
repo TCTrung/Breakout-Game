@@ -42,9 +42,9 @@ class Crossbar {
     }
 
     collideBall(ball) {
-        if (ball.y + ball.radius >= this.y
-            && this.x <= ball.x && this.x + this.width > ball.x) {
-            ball.xSpeed = +ball.xSpeed;
+        if (ball.y + ball.radius >= this.y &&
+            ball.y + ball.radius <= this.y + this.height &&
+            ball.x >= this.x && ball.x <= this.x + this.width) {
             ball.ySpeed = -ball.ySpeed;
         }
     }
